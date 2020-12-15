@@ -1,0 +1,3 @@
+Shel:
+  ReferenceList:
+    nodeTypeFilter: 'Neos.NodeTypes.ContentReferences:ContentReferences'

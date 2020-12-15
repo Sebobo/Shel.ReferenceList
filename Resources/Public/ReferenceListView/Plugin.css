@@ -1,0 +1,47 @@
+.style__table___39DpF {
+    width: 100%;
+}
+.style__column___318-X {
+    border: none;
+    padding: 0;
+}
+.style__column___318-X a {
+    color: white;
+}
+.style__column___318-X a:hover {
+    text-decoration: underline;
+}
+.style__icon___2naL5 {
+    padding-right: 4px;
+}
+
+.style__widget___2Hy30 {
+    background-color: #323232;
+}
+
+.style__header___14NUp {
+    display: flex;
+    border-bottom: 1px solid #222;
+    padding: 0 8px;
+    line-height: 40px;
+}
+
+.style__body___2Ti5z {
+    padding: 8px;
+}
+
+.style__label___1c1xz {
+    flex-grow: 1;
+}
+
+.style__subtitle___1UmAS {
+    color: #adadad;
+    text-align: right;
+}
+
+.style__warnIcon___1iOiO {
+    color: #ff8700;
+}
+
+
+/*# sourceMappingURL=Plugin.css.map*/

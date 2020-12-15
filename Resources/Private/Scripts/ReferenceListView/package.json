@@ -1,0 +1,21 @@
+{
+  "description": "View references to the current node in the Neos inspector",
+  "license": "GPL-3.0-or-later",
+  "private": true,
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "build": "neos-react-scripts build",
+    "watch": "neos-react-scripts watch"
+  },
+  "devDependencies": {
+    "@neos-project/neos-ui-extensibility": "^5.0",
+    "@neos-project/react-ui-components": "^5.0",
+    "prop-types": "^15.6.0",
+    "lodash.upperfirst": "^4.3.1"
+  },
+  "neos": {
+    "buildTargetDirectory": "../../../Public/ReferenceListView"
+  }
+}

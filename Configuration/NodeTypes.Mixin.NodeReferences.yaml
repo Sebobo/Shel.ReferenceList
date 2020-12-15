@@ -1,0 +1,16 @@
+Shel.ReferenceList:Mixin.NodeReferences:
+  ui:
+    inspector:
+      views:
+        nodeReferences:
+          label: i18n
+          group: 'nodeInfo'
+          view: 'Shel.ReferenceList/Inspector/Views/ReferenceListView'
+          viewOptions:
+            dataSource: 'ShelNodeReferences'
+            showHeader: false
+            collection: 'rows'
+            columns:
+              -
+                data: 'reference'
+                link: 'link'

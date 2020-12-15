@@ -1,0 +1,16 @@
+Neos:
+  Neos:
+    userInterface:
+      translation:
+        autoInclude:
+          Shel.ReferenceList:
+            - 'NodeTypes/*'
+    Ui:
+      resources:
+        javascript:
+          Shel.ReferenceList:ReferenceListView:
+            resource: resource://Shel.ReferenceList/Public/ReferenceListView/Plugin.js
+        stylesheets:
+          Shel.ReferenceList:ReferenceListView:
+            resource: resource://Shel.ReferenceList/Public/ReferenceListView/Plugin.css
+

@@ -1,0 +1,32 @@
+{
+  "description": "View references to the current node in the Neos inspector",
+  "type": "neos-plugin",
+  "name": "shel/referencelist",
+  "license": "GPL-3.0-or-later",
+  "keywords": [
+    "Neos CMS"
+  ],
+  "authors": [
+    {
+      "name": "Sebastian Helzle",
+      "email": "support@helzle.it",
+      "homepage": "https://www.helzle.it",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "neos/neos": ">= 5.3 || dev-master",
+    "neos/neos-ui": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shel\\ReferenceList\\": "Classes"
+    }
+  },
+  "extra": {
+    "neos": {
+      "package-key": "Shel.ReferenceList"
+    }
+  }
+}
+
