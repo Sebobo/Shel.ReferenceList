@@ -15,8 +15,8 @@
     }
   ],
   "require": {
-    "neos/neos": ">= 5.3 || dev-master",
-    "neos/neos-ui": "*"
+    "neos/neos": "^5.3 || ^7.0 || ^8.0 || dev-master",
+    "neos/neos-ui": "^5.3 || ^7.0 || ^8.0 || dev-master"
   },
   "autoload": {
     "psr-4": {
