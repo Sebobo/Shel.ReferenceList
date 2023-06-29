@@ -3,8 +3,8 @@
     <file original="" product-name="Shel.ReferenceList" source-language="en" target-language="de" datatype="plaintext">
         <body>
             <trans-unit id="views.nodeReferences" xml:space="preserve">
-                <source>References</source>
-                <target>Referenzen</target>
+                <source>Referenced on</source>
+                <target>Referenziert auf</target>
             </trans-unit>
         </body>
     </file>

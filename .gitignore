@@ -1,1 +1,8 @@
 node_modules
+
+Resources/Private/Scripts/ReferenceListView/.yarn/*
+!Resources/Private/Scripts/ReferenceListView/.yarn/patches
+!Resources/Private/Scripts/ReferenceListView/.yarn/plugins
+!Resources/Private/Scripts/ReferenceListView/.yarn/releases
+!Resources/Private/Scripts/ReferenceListView/.yarn/sdks
+!Resources/Private/Scripts/ReferenceListView/.yarn/versions

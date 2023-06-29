@@ -1,47 +1,51 @@
-.style__table___39DpF {
-    width: 100%;
-}
-.style__column___318-X {
-    border: none;
-    padding: 0;
-}
-.style__column___318-X a {
-    color: white;
-}
-.style__column___318-X a:hover {
-    text-decoration: underline;
-}
-.style__icon___2naL5 {
-    padding-right: 4px;
+.Widget-module__widget___28J7t {
+    background-color: var(--colors-ContrastNeutral);
 }
 
-.style__widget___2Hy30 {
-    background-color: #323232;
-}
-
-.style__header___14NUp {
+.Widget-module__header___Kz5M- {
     display: flex;
-    border-bottom: 1px solid #222;
-    padding: 0 8px;
-    line-height: 40px;
+    border-bottom: 1px solid var(--colors-ContrastDarker);
+    padding: 0 var(--spacing-Half);
+    line-height: var(--spacing-GoldenUnit);
 }
 
-.style__body___2Ti5z {
-    padding: 8px;
+.Widget-module__body___3ykMP {
+    padding: var(--spacing-Half);
 }
 
-.style__label___1c1xz {
+.Widget-module__label___19qZs {
     flex-grow: 1;
 }
 
-.style__subtitle___1UmAS {
-    color: #adadad;
+.Widget-module__subtitle___2xMBP {
+    color: var(--colors-ContrastBrighter);
     text-align: right;
 }
 
-.style__warnIcon___1iOiO {
-    color: #ff8700;
+.ReferenceListView-module__table___3wBLG {
+  width: 100%;
 }
 
+.ReferenceListView-module__column___iiFyA {
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: baseline;
+}
 
-/*# sourceMappingURL=Plugin.css.map*/
+.ReferenceListView-module__column___iiFyA a {
+  color: white;
+}
+
+.ReferenceListView-module__column___iiFyA a:hover {
+  text-decoration: underline;
+}
+
+.ReferenceListView-module__icon___lAduG {
+  padding-right: var(--spacing-Quarter);
+}
+
+.ReferenceListView-module__warnIcon___1Hc9r {
+  color: var(--colors-Warn);
+}
+

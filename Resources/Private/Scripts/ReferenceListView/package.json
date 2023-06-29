@@ -1,21 +1,52 @@
 {
-  "description": "View references to the current node in the Neos inspector",
-  "license": "GPL-3.0-or-later",
-  "private": true,
-  "engines": {
-    "node": ">=14"
-  },
-  "scripts": {
-    "build": "neos-react-scripts build",
-    "watch": "neos-react-scripts watch"
-  },
-  "devDependencies": {
-    "@neos-project/neos-ui-extensibility": "^5.0",
-    "@neos-project/react-ui-components": "^5.0",
-    "prop-types": "^15.6.0",
-    "lodash.upperfirst": "^4.3.1"
-  },
-  "neos": {
-    "buildTargetDirectory": "../../../Public/ReferenceListView"
-  }
+    "description": "View references to the current node in the Neos inspector",
+    "license": "GPL-3.0-or-later",
+    "private": true,
+    "engines": {
+        "node": ">=16"
+    },
+    "scripts": {
+        "build": "NODE_ENV=production neos-react-scripts build",
+        "watch": "neos-react-scripts watch",
+        "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
+    },
+    "devDependencies": {
+        "@neos-project/eslint-config-neos": "^2.6.1",
+        "@neos-project/neos-ui-extensibility": "^8.3.0",
+        "@neos-project/neos-ui-extensibility-webpack-adapter": "^8.3.0",
+        "@neos-project/react-ui-components": "^8.3.0",
+        "@types/react": "^16.14.35",
+        "@types/react-redux": "^7.1.25",
+        "eslint": "^8.43.0",
+        "eslint-config-prettier": "^8.6.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-react": "^7.32.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "prettier": "^2.8.4",
+        "prop-types": "^15.6.0",
+        "redux-actions": "^0.12.0",
+        "ts-node": "^10.8.2",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^4.6.4",
+        "typescript-plugin-css-modules": "^4.1.1"
+    },
+    "neos": {
+        "buildTargetDirectory": "../../../Public/ReferenceListView"
+    },
+    "resolutions": {
+        "ts-node": "10.8.2",
+        "typescript": "4.6.4"
+    },
+    "prettier": {
+        "printWidth": 120,
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 4
+    },
+    "browserslist": [
+        "> 0.5%",
+        "last 2 versions",
+        "not dead"
+    ],
+    "packageManager": "yarn@3.6.0"
 }

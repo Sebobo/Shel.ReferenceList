@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "skipLibCheck": true,
+        "target": "ES2019",
+        "module": "ES2020",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "jsx": "react",
+        "plugins": [
+            {
+                "name": "typescript-plugin-css-modules"
+            }
+        ],
+        "typeRoots": [
+            "./src/typings"
+        ]
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "include": [
+        "src/**/*"
+    ]
+}

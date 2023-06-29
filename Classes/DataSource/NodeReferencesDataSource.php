@@ -13,7 +13,10 @@ use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\ContentRepository\Domain\Repository\NodeDataRepository;
 use Neos\Eel\CompilingEvaluator;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Http\Exception;
 use Neos\Flow\I18n\Translator;
+use Neos\Flow\Mvc\Routing\Exception\MissingActionNameException;
+use Neos\Flow\Persistence\Exception\IllegalObjectTypeException;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
 use Neos\Neos\Service\LinkingService;
 
@@ -71,7 +74,7 @@ class NodeReferencesDataSource extends AbstractDataSource
             return [];
         }
 
-        $rows = [];
+        $references = [];
         $siteNode = $node->getContext()->getCurrentSiteNode();
 
         $referenceNodeData = $this->nodeDataRepository->findByParentAndNodeTypeRecursively(
@@ -98,23 +101,33 @@ class NodeReferencesDataSource extends AbstractDataSource
                     continue;
                 }
 
-                $link = $this->linkingService->createNodeUri(
-                    $this->controllerContext,
-                    $documentNode,
-                    $siteNode,
-                    'html',
-                    true
-                );
+                try {
+                    $link = $this->linkingService->createNodeUri(
+                        $this->controllerContext,
+                        $documentNode,
+                        $siteNode,
+                        'html',
+                        true
+                    );
+                } catch (\Exception $e) {
+                    $link = null;
+                }
 
-                $rows[] = [
+                if (array_key_exists($documentNode->getIdentifier(), $references)) {
+                    $references[$documentNode->getIdentifier()]['count']++;
+                    continue;
+                }
+                $references[$documentNode->getIdentifier()] = [
                     'reference' => $documentNode->getLabel(),
-                    'link' => $link
+                    'link' => $link,
+                    'icon' => $nodeWithReference->getNodeType()->getFullConfiguration()['ui']['icon'] ?? null,
+                    'count' => 1
                 ];
             }
         }
 
-        if (count($rows) === 0) {
-            $rows[] = [
+        if (count($references) === 0) {
+            $references[] = [
                 'reference' => $this->translator->translateById(
                     'noReferencesFound',
                     [],
@@ -128,7 +141,7 @@ class NodeReferencesDataSource extends AbstractDataSource
 
         return [
             'data' => [
-                'rows' => $rows
+                'references' => array_values($references),
             ]
         ];
     }

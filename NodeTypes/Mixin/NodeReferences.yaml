@@ -8,9 +8,3 @@ Shel.ReferenceList:Mixin.NodeReferences:
           view: 'Shel.ReferenceList/Inspector/Views/ReferenceListView'
           viewOptions:
             dataSource: 'ShelNodeReferences'
-            showHeader: false
-            collection: 'rows'
-            columns:
-              -
-                data: 'reference'
-                link: 'link'
