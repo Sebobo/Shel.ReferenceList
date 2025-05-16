@@ -1,0 +1,40 @@
+.item {
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.item span {
+  display: flex;
+  align-items: baseline;
+}
+
+.item a {
+  color: white;
+}
+
+.item a:hover {
+  text-decoration: underline;
+}
+
+.icon {
+  padding-right: var(--spacing-Quarter);
+}
+
+.breadcrumb {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: var(--spacing-Quarter) 0 0;
+  color: var(--colors-ContrastBright);
+  gap: var(--spacing-Quarter);
+  line-height: 1;
+  font-size: 90%;
+
+  li:not(:last-child)::after {
+    content: '›';
+    display: inline-block;
+    margin-left: var(--spacing-Quarter);
+  }
+}

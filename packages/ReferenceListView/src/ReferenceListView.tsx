@@ -13,6 +13,7 @@ import { Icon } from '@neos-project/react-ui-components';
 import Widget from './Components/Widget';
 
 import * as classes from './ReferenceListView.module.css';
+import ReferenceListItem from './Components/ReferenceListItem';
 
 type ReferenceListViewProps = {
     focusedNodeContextPath: string;
@@ -29,15 +30,6 @@ type ReferenceListViewProps = {
     dataSourcesDataLoader: {
         resolveValue: CallableFunction;
     };
-};
-
-type ReferenceData = {
-    references: {
-        reference: string;
-        link?: string;
-        icon?: string;
-        count: number;
-    }[];
 };
 
 type DataLoaderState = {
@@ -139,27 +131,11 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
                 subtitle={this.props.options.subtitle}
                 showHeader={this.props.options.showHeader}
             >
-                <table className={classes.table}>
-                    <tbody>
-                        {references.map((entry, key) => (
-                            <tr key={key}>
-                                <td className={classes.column}>
-                                    <Icon className={classes.icon} icon={entry.icon} />
-                                    <span>
-                                        {entry.link ? (
-                                            <a href={entry.link} target="_blank" rel="noreferrer">
-                                                {entry.reference}
-                                            </a>
-                                        ) : (
-                                            <span>{entry.reference}</span>
-                                        )}
-                                        {entry.count > 1 ? ` (${entry.count}x)` : ''}
-                                    </span>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <ul className={classes.list}>
+                    {references.map((entry, key) => (
+                        <ReferenceListItem key={key} entry={entry} />
+                    ))}
+                </ul>
             </Widget>
         );
     }
