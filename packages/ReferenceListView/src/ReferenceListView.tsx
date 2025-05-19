@@ -85,7 +85,8 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
                 dataSourceUri: this.props.options.dataSourceUri,
                 dataSourceAdditionalData,
             })
-            .then((response) => {
+            .then((response: Partial<DataLoaderState>) => {
+				console.log({response})
 				switch (true) {
 					case !!response.error:
 						this.setState({
