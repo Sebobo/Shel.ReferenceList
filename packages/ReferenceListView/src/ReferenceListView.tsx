@@ -86,22 +86,36 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
                 dataSourceAdditionalData,
             })
             .then((response) => {
-                if (response.error) {
-                    this.setState({
-                        data: null,
-                        error: response.error,
-                    });
-                } else if (response.data) {
-                    this.setState({
-                        data: response.data,
-                        error: false,
-                    });
-                } else {
-                    this.setState({
-                        data: null,
-                        error: new Error('Unknown datasource fetch error'),
-                    });
-                }
+				switch (true) {
+					case !!response.error:
+						this.setState({
+							data: null,
+							error: response.error,
+							info: null,
+						});
+						break;
+					case !!response.info:
+						this.setState({
+							data: null,
+							error: false,
+							info: response.info,
+						});
+						break;
+					case !!response.data:
+						this.setState({
+							data: response.data,
+							error: false,
+							info: null,
+						});
+						break;
+					default:
+						this.setState({
+							data: null,
+							error: new Error('Unknown datasource fetch error'),
+							info: null,
+						});
+						break;
+				}
             });
     }
 
@@ -135,7 +149,6 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
         }
 
         const references = data.references;
-		const message = data.message;
 
 		console.log({data})
         return (
