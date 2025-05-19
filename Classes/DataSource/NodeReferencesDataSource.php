@@ -91,9 +91,11 @@ class NodeReferencesDataSource extends AbstractDataSource
 
         // Fallback if no references are found
         if (count($references) === 0) {
-            $references = [
-                'message' => $this->translateById('noReferencesFound'),
-            ];
+            return [
+				'data' => [
+					'message' => $this->translateById('noReferencesFound'),
+				]
+			];
         }
 
         return [
