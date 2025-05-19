@@ -88,7 +88,6 @@ class NodeReferencesDataSource extends AbstractDataSource
                 }
             }
         }
-		die('References: ' . json_encode($references));
         // Fallback if no references are found
         if (count($references) === 0) {
             return [
