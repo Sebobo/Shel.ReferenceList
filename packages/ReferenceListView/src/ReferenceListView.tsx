@@ -35,6 +35,7 @@ type ReferenceListViewProps = {
 type DataLoaderState = {
     data: ReferenceData;
     error: false | { message: string };
+	info: null | { message: string };
 };
 
 class ReferenceListView extends PureComponent<ReferenceListViewProps> {
@@ -58,6 +59,7 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
     state: DataLoaderState = {
         data: null,
         error: false,
+		info: null
     };
 
     componentDidMount() {
@@ -104,13 +106,22 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
     }
 
     render() {
-        const { data, error } = this.state;
+        const { data, error, info } = this.state;
 
         if (error) {
             return (
                 <div>
                     <Icon icon="exclamation-triangle" className={classes.warnIcon} />
                     {error['message']}
+                </div>
+            );
+        }
+
+		if (info) {
+            return (
+                <div>
+                    <Icon icon="exclamation-triangle" className={classes.warnIcon} />
+                    {info['message']}
                 </div>
             );
         }
@@ -133,18 +144,11 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
                 subtitle={this.props.options.subtitle}
                 showHeader={this.props.options.showHeader}
             >
-				{references && references.length > 0 ? (
-					<ul className={classes.list}>
-						{references.map((entry, key) => (
-							<ReferenceListItem key={key} entry={entry} />
-						))}
-					</ul>
-				) : (
-					<div>
-						<Icon icon="exclamation-triangle" className={classes.warnIcon} />
-						{error['message']}
-					</div>				
-				)}
+				<ul className={classes.list}>
+					{references.map((entry, key) => (
+						<ReferenceListItem key={key} entry={entry} />
+					))}
+				</ul>
             </Widget>
         );
     }
