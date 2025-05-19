@@ -86,7 +86,6 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
                 dataSourceAdditionalData,
             })
             .then((response: Partial<DataLoaderState>) => {
-				console.log({response})
 				switch (true) {
 					case !!response.error:
 						this.setState({
@@ -151,7 +150,6 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
 
         const references = data.references;
 
-		console.log({data})
         return (
             <Widget
                 label={this.props.label}
