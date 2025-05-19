@@ -126,6 +126,7 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
         const references = data.references;
 		const message = data.message;
 
+		console.log({data})
         return (
             <Widget
                 label={this.props.label}
