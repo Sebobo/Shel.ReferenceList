@@ -148,7 +148,7 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
             );
         }
 
-        const references = data.references;
+        const references = data && data.references ? data.references : [];
 
         return (
             <Widget
