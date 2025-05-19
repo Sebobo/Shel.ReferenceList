@@ -123,7 +123,8 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
             );
         }
 
-        const references = data && data.references ? data.references : [];
+        const references = data.references;
+		const message = data.message;
 
         return (
             <Widget
@@ -131,11 +132,18 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
                 subtitle={this.props.options.subtitle}
                 showHeader={this.props.options.showHeader}
             >
-                <ul className={classes.list}>
-                    {references.map((entry, key) => (
-                        <ReferenceListItem key={key} entry={entry} />
-                    ))}
-                </ul>
+				{references && references.length > 0 ? (
+					<ul className={classes.list}>
+						{references.map((entry, key) => (
+							<ReferenceListItem key={key} entry={entry} />
+						))}
+					</ul>
+				) : (
+					<div>
+						<Icon icon="exclamation-triangle" className={classes.warnIcon} />
+						{error['message']}
+					</div>				
+				)}
             </Widget>
         );
     }
