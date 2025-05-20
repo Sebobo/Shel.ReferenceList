@@ -33,9 +33,10 @@ type ReferenceListViewProps = {
 };
 
 type DataLoaderState = {
-    data: ReferenceData;
-    error: false | { message: string };
-	info: null | { message: string };
+    references: ReferenceData;
+    success: boolean;
+    message?: string;
+    loading: boolean;
 };
 
 class ReferenceListView extends PureComponent<ReferenceListViewProps> {
@@ -49,17 +50,18 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
             dataSource: PropTypes.string,
             dataSourceUri: PropTypes.string,
             subtitle: PropTypes.string,
-            showHeader: PropTypes.bool,
+            showHeader: PropTypes.bool
         }).isRequired,
         dataSourcesDataLoader: PropTypes.shape({
-            resolveValue: PropTypes.func.isRequired,
-        }).isRequired,
+            resolveValue: PropTypes.func.isRequired
+        }).isRequired
     };
 
     state: DataLoaderState = {
-        data: null,
-        error: false,
-		info: null
+        references: null,
+        success: false,
+        message: null,
+        loading: false,
     };
 
     componentDidMount() {
@@ -78,77 +80,66 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
             this.props.options.arguments
         );
 
+        this.setState({
+            loading: true,
+            references: [],
+            success: false,
+            message: null,
+        });
+
         this.props.dataSourcesDataLoader
-            .resolveValue({
-                contextNodePath: this.props.focusedNodeContextPath,
-                dataSourceIdentifier: this.props.options.dataSource,
-                dataSourceUri: this.props.options.dataSourceUri,
-                dataSourceAdditionalData,
-            })
-            .then((response: Partial<DataLoaderState>) => {
-				switch (true) {
-					case !!response.error:
-						this.setState({
-							data: null,
-							error: response.error,
-							info: null,
-						});
-						break;
-					case !!response.info:
-						this.setState({
-							data: null,
-							error: false,
-							info: response.info,
-						});
-						break;
-					case !!response.data:
-						this.setState({
-							data: response.data,
-							error: false,
-							info: null,
-						});
-						break;
-					default:
-						this.setState({
-							data: null,
-							error: new Error('Unknown datasource fetch error'),
-							info: null,
-						});
-						break;
-				}
+        .resolveValue({
+            contextNodePath: this.props.focusedNodeContextPath,
+            dataSourceIdentifier: this.props.options.dataSource,
+            dataSourceUri: this.props.options.dataSourceUri,
+            dataSourceAdditionalData
+        })
+        .then(({ success, message, references }: Partial<DataLoaderState>) => {
+            this.setState({
+                references,
+                success,
+                message,
             });
+        }).catch(({ message }: Error) => {
+            this.setState({
+                references: [],
+                success: false,
+                message: message,
+            });
+        }).finally(() => {
+            this.setState({
+                loading: false,
+            });
+        });
     }
 
     render() {
-        const { data, error, info } = this.state;
+        const { references, message, success, loading } = this.state;
 
-        if (error) {
+        if (loading) {
             return (
                 <div>
-                    <Icon icon="exclamation-triangle" className={classes.warnIcon} />
-                    {error['message']}
+                    <I18n id='Neos.Neos:Main:loading' />
                 </div>
             );
         }
 
-		if (info) {
+        if (!success) {
             return (
                 <div>
-                    <Icon icon="exclamation-triangle" className={classes.warnIcon} />
-                    {info['message']}
+                    <Icon icon='exclamation-triangle' className={classes.warnIcon} />
+                    {' '}{message}
                 </div>
             );
         }
 
-        if (!data) {
+        if (references.length === 0) {
             return (
                 <div>
-                    <I18n id="Neos.Neos:Main:loading" />
+                    {message}
                 </div>
             );
         }
-
-        const references = data && data.references ? data.references : [];
 
         return (
             <Widget
@@ -156,21 +147,21 @@ class ReferenceListView extends PureComponent<ReferenceListViewProps> {
                 subtitle={this.props.options.subtitle}
                 showHeader={this.props.options.showHeader}
             >
-				<ul className={classes.list}>
-					{references.map((entry, key) => (
-						<ReferenceListItem key={key} entry={entry} />
-					))}
-				</ul>
+                <ul className={classes.list}>
+                    {references.map((entry, key) => (
+                        <ReferenceListItem key={key} entry={entry} />
+                    ))}
+                </ul>
             </Widget>
         );
     }
 }
 
 const mapGlobalRegistryToProps = neos((globalRegistry: any) => ({
-    dataSourcesDataLoader: globalRegistry.get('dataLoaders').get('DataSources'),
+    dataSourcesDataLoader: globalRegistry.get('dataLoaders').get('DataSources')
 }));
 
 export default connect((state) => ({
     focusedNodeContextPath: selectors.CR.Nodes.focusedNodePathSelector(state),
-    getNodeByContextPath: selectors.CR.Nodes.nodeByContextPath(state),
+    getNodeByContextPath: selectors.CR.Nodes.nodeByContextPath(state)
 }))(mapGlobalRegistryToProps(ReferenceListView));
