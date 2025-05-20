@@ -89,17 +89,10 @@ class NodeReferencesDataSource extends AbstractDataSource
             }
         }
 
-        // Fallback if no references are found
-        if (count($references) === 0) {
-            $references[] = [
-                'reference' => $this->translateById('noReferencesFound'),
-            ];
-        }
-
         return [
-            'data' => [
-                'references' => array_values($references),
-            ]
+            'success' => true,
+            'references' => array_values($references),
+            'message' => $references ? null : $this->translateById('noReferencesFound'),
         ];
     }
 
@@ -200,8 +193,9 @@ class NodeReferencesDataSource extends AbstractDataSource
     protected function getBreadcrumb(NodeInterface $documentNode): array
     {
         $breadcrumb = [];
+        $siteNode = $documentNode->getContext()->getCurrentSiteNode();
         $parent = $documentNode->getParent();
-        while ($parent?->getNodeType()->isOfType('Neos.Neos:Document')) {
+        while ($parent?->getNodeType()->isOfType('Neos.Neos:Document') && $parent !== $siteNode) {
             $breadcrumb[] = $parent->getLabel();
             $parent = $parent->getParent();
         }
