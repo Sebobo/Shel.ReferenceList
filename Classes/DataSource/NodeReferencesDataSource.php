@@ -59,33 +59,46 @@ class NodeReferencesDataSource extends AbstractDataSource
         }
 
         $references = [];
+        $nodeIdentifier = $node->getIdentifier();
         $siteNode = $node->getContext()->getCurrentSiteNode();
         $nodesWithReferences = $this->getNodesWithReferences($siteNode, $node);
 
         foreach ($nodesWithReferences as $nodeWithReference) {
             $referencePropertyNames = $this->getReferenceTypePropertyNames($nodeWithReference);
             foreach ($referencePropertyNames as $propertyName) {
-                if ($nodeWithReference->hasProperty($propertyName) && in_array($node,
-                        $nodeWithReference->getProperty($propertyName), true)) {
-                    $documentNode = $this->getClosestDocumentNode($nodeWithReference);
-                    if (!$documentNode) {
-                        continue;
-                    }
-
-                    // Duplicates add to the count
-                    if (array_key_exists($documentNode->getIdentifier(), $references)) {
-                        $references[$documentNode->getIdentifier()]['count']++;
-                        continue;
-                    }
-
-                    $references[$documentNode->getIdentifier()] = [
-                        'reference' => $documentNode->getLabel(),
-                        'breadcrumb' => $this->getBreadcrumb($documentNode),
-                        'link' => $this->getNodeUri($documentNode),
-                        'icon' => $nodeWithReference->getNodeType()->getFullConfiguration()['ui']['icon'] ?? null,
-                        'count' => 1
-                    ];
+                if (!$nodeWithReference->hasProperty($propertyName)) {
+                    continue;
                 }
+
+                // If the property is not or doesn't contain a reference to the current node, skip it
+                $referencePropertyValue = $nodeWithReference->getNodeData()->getProperty($propertyName);
+                if ($referencePropertyValue !== $nodeIdentifier
+                    && (!is_array($referencePropertyValue) || !in_array(
+                            $nodeIdentifier,
+                            $referencePropertyValue,
+                            true
+                        ))) {
+                    continue;
+                }
+
+                $documentNode = $this->getClosestDocumentNode($nodeWithReference);
+                if (!$documentNode) {
+                    continue;
+                }
+
+                // Duplicates add to the count
+                if (array_key_exists($documentNode->getIdentifier(), $references)) {
+                    $references[$documentNode->getIdentifier()]['count']++;
+                    continue;
+                }
+
+                $references[$documentNode->getIdentifier()] = [
+                    'reference' => $documentNode->getLabel(),
+                    'breadcrumb' => $this->getBreadcrumb($documentNode),
+                    'link' => $this->getNodeUri($documentNode),
+                    'icon' => $nodeWithReference->getNodeType()->getFullConfiguration()['ui']['icon'] ?? null,
+                    'count' => 1
+                ];
             }
         }
 
