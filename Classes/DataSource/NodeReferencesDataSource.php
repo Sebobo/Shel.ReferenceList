@@ -33,7 +33,7 @@ class NodeReferencesDataSource extends AbstractDataSource
     protected static $identifier = 'ShelNodeReferences';
 
     #[Flow\InjectConfiguration('nodeTypeFilter', 'Shel.ReferenceList')]
-    protected ?string $nodeTypeFilter;
+    protected $nodeTypeFilter;
 
     protected array $propertyNamesByNodeTypeCache = [];
 
@@ -125,9 +125,14 @@ class NodeReferencesDataSource extends AbstractDataSource
      */
     protected function getNodesWithReferences($siteNode, NodeInterface $node): array
     {
+        $nodeTypeFilter = $this->nodeTypeFilter;
+        if (is_array($nodeTypeFilter)) {
+            $nodeTypeFilter = implode(',', $nodeTypeFilter);
+        }
+
         $referenceNodeData = $this->nodeDataRepository->findByParentAndNodeTypeRecursively(
             $siteNode->getPath(),
-            $this->nodeTypeFilter,
+            $nodeTypeFilter,
             $node->getWorkspace(),
             $node->getDimensions()
         );

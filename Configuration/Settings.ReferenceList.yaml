@@ -1,3 +1,4 @@
 Shel:
   ReferenceList:
-    nodeTypeFilter: 'Neos.NodeTypes.ContentReferences:ContentReferences'
+    nodeTypeFilter:
+      - 'Neos.NodeTypes.ContentReferences:ContentReferences'
